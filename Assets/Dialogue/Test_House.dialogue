@@ -1,0 +1,11 @@
+# Test_House
+
+// Conversations of the house interior test scene.
+
+[house_intro | forced]
+// Continues the cutscene of Test_Movement after the scene change (started by "@scene Test_House door house_intro").
+@face Player north
+> A new scene: the previous cutscene continued right where it stopped.
+@move Player 0 -2
+@wait 0.3
+> Walk back to the door at the bottom of the room to leave.

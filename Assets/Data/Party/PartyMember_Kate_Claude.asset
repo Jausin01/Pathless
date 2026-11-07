@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be873205f42ced4d9937a0d961dfc37, type: 3}
+  m_Name: PartyMember_Kate_Claude
+  m_EditorClassIdentifier: Assembly-CSharp::Pathless.Party.PartyMember
+  memberId: kate
+  displayName: Kate
+  portrait: {fileID: 21300000, guid: fc0dce641d725b64eacc886d9ef7e4ca, type: 3}
+  level: 1
+  maxHp: 100
+  startingHp: 0
+  specialName: Special
+  maxSpecial: 50
+  startingSpecial: 0
+  specialColor: {r: 0.62, g: 0.38, b: 0.85, a: 1}
+  curse: {fileID: 11400000, guid: 8a5affd2b395a8c42b612cda5edf9b4e, type: 2}
+  pathId: 
+  abilities: []

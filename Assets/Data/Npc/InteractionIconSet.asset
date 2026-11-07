@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21f442aa52752f546abd58fdf63fcdbd, type: 3}
+  m_Name: InteractionIconSet
+  m_EditorClassIdentifier: Assembly-CSharp::Pathless.Npc.InteractionIconSet
+  talk: {fileID: 21300000, guid: c66fcb49a75810f43b535e64316d0ac9, type: 3}
+  quest: {fileID: 21300000, guid: 13c43c7596f50294aafcd6ed848b2c4a, type: 3}
+  save: {fileID: 21300000, guid: 6ced81a8a2bea464bbbf53b02ecde368, type: 3}

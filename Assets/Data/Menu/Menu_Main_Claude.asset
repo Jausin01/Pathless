@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2f48626c5b1625429a3ecb31c0457ac, type: 3}
+  m_Name: Menu_Main_Claude
+  m_EditorClassIdentifier: Assembly-CSharp::Pathless.Menu.MenuDefinition
+  title: MENU
+  entries:
+  - id: items
+    label: Items
+  - id: skills
+    label: Skills
+  - id: equipment
+    label: Equipment
+  - id: status
+    label: Status
+  - id: formation
+    label: Formation
+  - id: quests
+    label: Quests
+  - id: map
+    label: Map
+  - id: settings
+    label: Settings
+  - id: save
+    label: Save
+  - id: quit
+    label: Quit

@@ -1,0 +1,137 @@
+# Test_Movement
+
+// Test conversations of the movement test scene. Characters: Elder, Messenger.
+// Tags: "forced" starts when the player walks into a zone, "optional" needs the interact button.
+
+[forced_intro | forced]
+Messenger (happy): Wait! You walked into my zone, so this dialogue starts by itself.
+Messenger (neutral): Forced dialogues are for story moments. Optional ones are for chatting with townsfolk.
+Messenger (sad): That is all I had to say. Safe travels.
+
+=========
+
+[optional_chat | optional]
+// Story flags demo: "elder_trust" is set by the choice at the end of this conversation and read here on the next visit.
+@if elder_trust >= 1
+Elder (happy): Good to see you again, friend!
+@end
+Elder (neutral): Hello, traveler. This is the optional dialogue: you pressed the interact button to talk to me.
+Elder (happy): The text appears letter by letter, with longer pauses after commas, and even longer after full stops.
+Messenger (angry): Press <color=#ffd060>Space</color> while I am talking and the whole line shows at once!
+Elder (sad): Press it again to continue... and once more to close this box.
+> A line without a name is narration: no name plate, portrait or voice.
+Elder (neutral): One last thing, traveler. Will you help me find my lost bell?
+@choice
+- Of course, I will. => @set helped_elder @add elder_trust 1 @quest start find_bell
+- Maybe later. => @set refused_elder
+- Tell me more first. => @goto elder_bell_story
+
+@if helped_elder
+Elder (happy): Wonderful! You have my thanks.
+@else
+Elder (sad): I understand. Talk to me again if you change your mind.
+@end
+
+=========
+
+[elder_bell_story | optional]
+// Reached with "@goto" from the choice above.
+Elder (sad): The bell rang from the old tower every morning, until the day the roof fell.
+Elder (neutral): Now you know. Talk to me again if you want to help.
+
+=========
+
+[sign_welcome | optional]
+// No speaker name: signs use narration lines, so the box is centered with no portrait.
+> Welcome to the test area. Walk into the forced zone to the south-west, or talk to the block to the east.
+> Press Space to close this sign.
+
+=========
+
+[cutscene_demo | forced]
+// Cutscene demo: @commands run in order, the dialogue box hides while they run.
+@quest start deliver_message
+@fade out 0.6
+@wait 0.3
+@face Messenger north
+@fade in 0.6
+Messenger (happy): Hold on, traveler! This is a cutscene: the screen faded out and back in by itself.
+@camera focus Elder 1.2
+@wait 0.6
+Messenger (neutral): The camera just moved to the Elder. Commands go inside the same .dialogue file.
+@camera follow Player 0.8
+@move Messenger -3.5 -6
+@face Messenger west
+Messenger (sad): I walked here on my own. Safe travels.
+@quest complete deliver_message
+// Scene change: loads Test_House, puts the player on its "door" spawn point and continues with "house_intro".
+// Delete this line to end the demo here instead.
+@scene Test_House door house_intro
+
+=========
+
+[violet_chat | optional]
+// Portrait test: every expression of Violet and of the Protagonist appears at least once.
+Violet (neutral): ...Oh. It's you.
+Protagonist (neutral): Hey, Violet. Do you have a minute?
+Violet (happy): Always. You're the only one who asks.
+Protagonist (happy): That's not true. Everybody likes you.
+Violet (sad): Do they? Sometimes it feels like they only look at me when something goes wrong.
+Protagonist (angry): Then they are not paying attention!
+Violet (angry): Don't shout. I'm not made of glass.
+Protagonist (scared): Sorry! I did not mean to... I just...
+Violet (scared): Wait. Did you hear that?
+Protagonist (shocked): Hear what? I did not hear anything.
+Violet (neutral): Good. Forget it. It was nothing.
+> End of the portrait test.
+
+=========
+
+[kate_chat | optional]
+// Portrait test: every expression of Kate and of the Protagonist appears at least once.
+Kate (neutral): Oh, hi. I was just looking at the ground. There are some really interesting rocks here.
+Protagonist (neutral): Rocks. Right. You said that yesterday too.
+Kate (happy): And they were still interesting! Do you want to see this one?
+Protagonist (happy): Okay, okay. Show me.
+Kate (sad): ...It was a better rock before I picked it up. It looked different on the ground.
+Protagonist (scared): Kate, why is it glowing?
+Kate (scared): I do not know! I did not do anything, I swear!
+Protagonist (angry): Put it down. Now.
+Kate (angry): Do not tell me what to do! It is my rock!
+Protagonist (shocked): Fine, fine. Just do not drop it on my foot.
+Kate (neutral): ...Okay. I put it back. Happy now?
+> End of the portrait test.
+
+=========
+
+[alice_chat | optional]
+// Portrait test: every expression of Alice and of the Protagonist appears at least once.
+Alice (neutral): You are late. Again.
+Protagonist (neutral): I am not late. You are just always early.
+Alice (happy): That is the same thing, only more flattering to me.
+Protagonist (happy): Fine. You win. What are you doing out here?
+Alice (sad): Running. It is the only thing that makes the world feel slow enough.
+Protagonist (scared): Alice, you were standing next to me a second ago. Where did you go?
+Alice (scared): I do not know. I only blinked and the road was behind me.
+Protagonist (shocked): That is not normal, even for you.
+Alice (angry): Do not say that like I am a freak!
+Protagonist (angry): I did not mean it like that, and you know it.
+Alice (neutral): ...Yeah. I know. Sorry.
+> End of the portrait test.
+
+=========
+
+[gabe_chat | optional]
+// Portrait test: every expression of Gabe and of the Protagonist appears at least once.
+Gabe (neutral): Hey. Everyone else is busy, so I figured I would check on you.
+Protagonist (neutral): I am fine. You do not have to do that.
+Gabe (happy): I know. That is why it counts.
+Protagonist (happy): You are impossible, you know that?
+Gabe (sad): Sometimes I think I am the only one who is not scared of what is coming.
+Protagonist (scared): Gabe, behind you!
+Gabe (scared): What? Where?! ...Oh. It is just a branch.
+Protagonist (shocked): You almost gave me a heart attack.
+Gabe (angry): I almost gave myself one! Do not do that to me!
+Protagonist (angry): Then stop making me worry about you.
+Gabe (neutral): ...Deal. Come on, let us go back.
+> End of the portrait test.

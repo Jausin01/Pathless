@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c949eb6fd484224bb9be3558392acdc, type: 3}
+  m_Name: Character_Npc_Claude
+  m_EditorClassIdentifier: Assembly-CSharp::Pathless.Dialogue.DialogueCharacter
+  displayName: Elder
+  voiceBlip: {fileID: 8300000, guid: 432d33f4470e87e4092f6c5c3984d963, type: 3}
+  voicePitch: 0.85
+  portraits:
+  - expression: neutral
+    sprite: {fileID: 21300000, guid: c2b43c0b9c7bdbe46ad92ca48a09e4d4, type: 3}
+  - expression: happy
+    sprite: {fileID: 21300000, guid: 39c08591e3ccb2b4b9b981de115fadd1, type: 3}
+  - expression: angry
+    sprite: {fileID: 21300000, guid: 649213806c65e8a4ca7cd04f3a4eae25, type: 3}
+  - expression: sad
+    sprite: {fileID: 21300000, guid: c2279b23639799e4d92188cc9a5ce6f3, type: 3}

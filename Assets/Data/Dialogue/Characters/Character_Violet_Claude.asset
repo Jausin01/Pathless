@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c949eb6fd484224bb9be3558392acdc, type: 3}
+  m_Name: Character_Violet_Claude
+  m_EditorClassIdentifier: Assembly-CSharp::Pathless.Dialogue.DialogueCharacter
+  displayName: Violet
+  voiceBlip: {fileID: 8300000, guid: 432d33f4470e87e4092f6c5c3984d963, type: 3}
+  voicePitch: 1.15
+  portraits:
+  - expression: neutral
+    sprite: {fileID: 21300000, guid: 108de75b5dcce7b4bb608521959d2400, type: 3}
+  - expression: happy
+    sprite: {fileID: 21300000, guid: c32ca41a12082bf47adeb9902295194c, type: 3}
+  - expression: angry
+    sprite: {fileID: 21300000, guid: 01cadb3335a10f844b4f6f3f4bac7544, type: 3}
+  - expression: sad
+    sprite: {fileID: 21300000, guid: d0fba9c9dfed86749b02d427a1610811, type: 3}
+  - expression: scared
+    sprite: {fileID: 21300000, guid: b51b9b167978d614585182c697ee8177, type: 3}
+  - expression: shocked
+    sprite: {fileID: 21300000, guid: b51b9b167978d614585182c697ee8177, type: 3}
