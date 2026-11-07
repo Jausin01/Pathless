@@ -92,7 +92,7 @@ namespace Pathless.Dialogue
             TMP_TextInfo info = label.textInfo;
             int total = info.characterCount;
 
-            float baseDelay = 1f / Mathf.Max(1f, charactersPerSecond);
+            float baseDelay = 1f / Mathf.Max(1f, charactersPerSecond * Pathless.Settings.GameSettings.TextSpeedMultiplier);
             int visible = 0;
             float timer = 0f;
             float currentDelay = 0f; // The first character appears immediately.

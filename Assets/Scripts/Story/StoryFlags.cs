@@ -48,6 +48,13 @@ namespace Pathless.Story
             return Get(name) != 0f;
         }
 
+        /// <summary>Deletes a flag, so it counts as never set (Contains becomes false, Get returns 0).</summary>
+        /// <param name="name">The flag name.</param>
+        public static void Remove(string name)
+        {
+            Values.Remove(name);
+        }
+
         /// <summary>Stores a value.</summary>
         /// <param name="name">Flag name.</param>
         /// <param name="value">New value.</param>

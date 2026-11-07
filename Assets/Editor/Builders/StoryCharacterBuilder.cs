@@ -6,7 +6,7 @@ namespace Pathless.EditorTools
 {
     /// <summary>
     /// Creates the DialogueCharacter assets of the story characters that already have real portraits
-    /// (Protagonist, Violet, Kate, Alice and Gabe), so they can speak in .dialogue files ("Violet | sad: ..."). Portraits are the
+    /// (Protagonist, Violet, Kate, Alice, Gabe, Michael and Hina), so they can speak in .dialogue files ("Violet | sad: ..."). Portraits are the
     /// author's own art in Assets/Art/Portraits/(Name)/Portrait_(Name)_(expression).png.
     /// "scared" is also registered as "shocked" because the same face fits both. Existing assets are updated in place.
     /// Run it with Tools > Pathless > Dialogue > Build Story Characters (also part of Build Everything).
@@ -42,8 +42,10 @@ namespace Pathless.EditorTools
             bool kate = BuildCharacter("Kate", blip, 1.1f, new[] { "neutral", "happy", "angry", "sad", "scared" });
             bool alice = BuildCharacter("Alice", blip, 1.2f, new[] { "neutral", "happy", "angry", "sad", "scared" });
             bool gabe = BuildCharacter("Gabe", blip, 0.9f, new[] { "neutral", "happy", "angry", "sad", "scared" });
+            bool michael = BuildCharacter("Michael", blip, 1.05f, new[] { "neutral", "happy", "angry", "sad", "scared" });
+            bool hina = BuildCharacter("Hina", blip, 1.1f, new[] { "neutral", "happy", "angry", "sad", "scared" });
             AssetDatabase.SaveAssets();
-            return protagonist && violet && kate && alice && gabe;
+            return protagonist && violet && kate && alice && gabe && michael && hina;
         }
 
         /// <summary>Creates or updates one character from the portrait files of its folder.</summary>

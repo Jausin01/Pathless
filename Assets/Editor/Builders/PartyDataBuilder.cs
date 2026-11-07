@@ -22,7 +22,11 @@ namespace Pathless.EditorTools
         private const string PortraitFolder = "Assets/Art/Portraits/Test_Claude";
 
         /// <summary>Path of the roster asset.</summary>
-        public const string RosterPath = PartyFolder + "/PartyRoster_Main_Claude.asset";
+        /// <remarks>It is inside a Resources folder so PartyRegistry can load it from any scene (see PartyRegistry.ResourcePath).</remarks>
+        public const string RosterPath = "Assets/Resources/" + Pathless.Party.PartyRegistry.ResourcePath + ".asset";
+
+        /// <summary>Where the roster used to be saved; it is moved from there (keeping its GUID) the first time.</summary>
+        private const string OldRosterPath = PartyFolder + "/PartyRoster_Main_Claude.asset";
 
         /// <summary>Description of one character, used only to fill the assets.</summary>
         private struct Character
@@ -87,6 +91,13 @@ namespace Pathless.EditorTools
             {
                 Curse curse = BuildCurse(Characters[i]);
                 members[i] = BuildMember(Characters[i], curse, LoadPortrait(Characters[i], portrait));
+            }
+
+            EditorAssetUtility.EnsureFolder("Assets/Resources/Party");
+            if (AssetDatabase.LoadAssetAtPath<PartyRoster>(RosterPath) == null
+                && AssetDatabase.LoadAssetAtPath<PartyRoster>(OldRosterPath) != null)
+            {
+                AssetDatabase.MoveAsset(OldRosterPath, RosterPath);
             }
 
             PartyRoster roster = BuildRoster(members);

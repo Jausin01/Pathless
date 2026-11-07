@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Pathless.Party.PartyMember
   memberId: hina
   displayName: Hina
-  portrait: {fileID: 21300000, guid: c2b43c0b9c7bdbe46ad92ca48a09e4d4, type: 3}
+  portrait: {fileID: 21300000, guid: f10312fcf7d75b549b04ba0d96559914, type: 3}
   level: 1
   maxHp: 100
   startingHp: 0

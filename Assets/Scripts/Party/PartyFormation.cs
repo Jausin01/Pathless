@@ -55,6 +55,15 @@ namespace Pathless.Party
             return active;
         }
 
+        /// <summary>Forgets the chosen party: the default party (first members of the roster) is used again.</summary>
+        public static void Clear()
+        {
+            for (int slot = 0; slot < PartyRoster.MaxSlots; slot++)
+            {
+                StoryFlags.Remove(SlotKey(slot));
+            }
+        }
+
         /// <summary>Sets who is in the active party (extra members beyond MaxSlots are ignored).</summary>
         /// <param name="roster">The roster that holds all members.</param>
         /// <param name="members">The members that will be active, in order.</param>

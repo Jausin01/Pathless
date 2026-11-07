@@ -20,6 +20,22 @@ namespace Pathless.Party
         /// <summary>All the members, in a fixed order.</summary>
         public IReadOnlyList<PartyMember> Members => members;
 
+        /// <summary>Finds a member by its id (not case sensitive).</summary>
+        /// <param name="id">The memberId, for example "alice".</param>
+        /// <returns>The member, or null if none has that id.</returns>
+        public PartyMember FindById(string id)
+        {
+            foreach (PartyMember member in members)
+            {
+                if (member != null && string.Equals(member.MemberId, id, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    return member;
+                }
+            }
+
+            return null;
+        }
+
         /// <summary>Finds the position of a member in the list.</summary>
         /// <param name="member">The member.</param>
         /// <returns>The index, or -1 if the member is not in this roster.</returns>

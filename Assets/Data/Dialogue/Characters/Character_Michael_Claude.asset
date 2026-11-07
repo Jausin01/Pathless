@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c949eb6fd484224bb9be3558392acdc, type: 3}
+  m_Name: Character_Michael_Claude
+  m_EditorClassIdentifier: Assembly-CSharp::Pathless.Dialogue.DialogueCharacter
+  displayName: Michael
+  voiceBlip: {fileID: 8300000, guid: 432d33f4470e87e4092f6c5c3984d963, type: 3}
+  voicePitch: 1.05
+  portraits:
+  - expression: neutral
+    sprite: {fileID: 21300000, guid: 82a5479b07afca144ae07c0a24c34a34, type: 3}
+  - expression: happy
+    sprite: {fileID: 21300000, guid: 84235e4dcc2a1bb41b683b039e333634, type: 3}
+  - expression: angry
+    sprite: {fileID: 21300000, guid: 4b585656a6de27e4d8cc2c99bb866754, type: 3}
+  - expression: sad
+    sprite: {fileID: 21300000, guid: e4519cbc1f76aca418323f76eaa46e03, type: 3}
+  - expression: scared
+    sprite: {fileID: 21300000, guid: fcac59357fc53de4085a7e38577db11c, type: 3}
+  - expression: shocked
+    sprite: {fileID: 21300000, guid: fcac59357fc53de4085a7e38577db11c, type: 3}

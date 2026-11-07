@@ -9,6 +9,7 @@ namespace Pathless.Npc
     /// the animation itself is played by the Animator (the idle blend tree of the character's controller, which has
     /// the same parameters as the player's). The NPC starts looking at "initialDirection" and, when a conversation
     /// starts with it (DialogueInteractable.Interacted), turns to look at whoever started it.
+    /// Cutscenes (CutsceneActor) also use it to turn the NPC (Face) and to play the walk animation (SetWalking).
     /// </summary>
     [RequireComponent(typeof(Animator))]
     public class NpcFacing : MonoBehaviour
@@ -60,6 +61,26 @@ namespace Pathless.Npc
             }
         }
 
+        /// <summary>The direction the NPC looks at now (snapped to the 8 compass directions).</summary>
+        public Vector2 Direction { get; private set; } = Vector2.down;
+
+        /// <summary>Turns the NPC to look in a direction (any non-zero vector, snapped to 8 directions).</summary>
+        /// <param name="direction">The direction to look at.</param>
+        public void Face(Vector2 direction)
+        {
+            if (direction.sqrMagnitude > 0f)
+            {
+                SetDirection(direction);
+            }
+        }
+
+        /// <summary>Switches between the walk animation (true) and the idle animation (false).</summary>
+        /// <param name="walking">True while the NPC is moving.</param>
+        public void SetWalking(bool walking)
+        {
+            animator.SetBool(IsMovingHash, walking);
+        }
+
         /// <summary>Turns the NPC to look at a point in the world.</summary>
         /// <param name="worldPoint">The point to look at.</param>
         public void FaceTowards(Vector2 worldPoint)
@@ -86,6 +107,7 @@ namespace Pathless.Npc
         private void SetDirection(Vector2 direction)
         {
             Vector2 snapped = Direction8.Snap(direction);
+            Direction = snapped;
             animator.SetFloat(MoveXHash, snapped.x);
             animator.SetFloat(MoveYHash, snapped.y);
             animator.SetBool(IsMovingHash, false);

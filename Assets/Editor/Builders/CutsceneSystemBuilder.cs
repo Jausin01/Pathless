@@ -1,4 +1,7 @@
+using Pathless.Audio;
 using Pathless.Cutscene;
+using Pathless.Dialogue;
+using Pathless.Party;
 using Pathless.SceneFlow;
 using UnityEditor;
 using UnityEngine;
@@ -45,6 +48,11 @@ namespace Pathless.EditorTools
             CutsceneCamera cutsceneCamera = root.AddComponent<CutsceneCamera>();
             SceneLoader sceneLoader = root.AddComponent<SceneLoader>();
 
+            // Extra command groups (@party, @bond ...). The director asks them for commands it does not know.
+            PartyCommandModule partyModule = root.AddComponent<PartyCommandModule>();
+            FormationCommandModule formationModule = root.AddComponent<FormationCommandModule>();
+            AudioCommandModule audioModule = BuildAudio(root);
+
             // ---- Canvas with the black fade image ----
             GameObject canvasObject = new GameObject("FadeCanvas", typeof(RectTransform));
             canvasObject.transform.SetParent(root.transform, false);
@@ -80,11 +88,72 @@ namespace Pathless.EditorTools
             EditorAssetUtility.SetReference(director, "cutsceneCamera", cutsceneCamera);
             EditorAssetUtility.SetReference(director, "sceneLoader", sceneLoader);
             EditorAssetUtility.SetReference(sceneLoader, "fader", fader);
+            SetModules(director, new CommandModule[] { partyModule, formationModule, audioModule });
 
             PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
             Object.DestroyImmediate(root);
             Debug.Log("CutsceneSystemBuilder: prefab saved at " + PrefabPath);
             return true;
+        }
+
+        /// <summary>
+        /// Adds the audio system to the cutscene object: the music player (two sources for crossfading), the sound
+        /// effect player and the command module (@music, @sfx), all using the AudioLibrary.
+        /// </summary>
+        /// <param name="root">The CutsceneSystem object.</param>
+        /// <returns>The audio command module.</returns>
+        private static AudioCommandModule BuildAudio(GameObject root)
+        {
+            AudioLibrary library = AssetDatabase.LoadAssetAtPath<AudioLibrary>(AudioBuilder.LibraryPath);
+            if (library == null)
+            {
+                Debug.LogWarning("CutsceneSystemBuilder: audio library not found, @music and @sfx will not find any sound. Run 'Build Audio Library' first.");
+            }
+
+            AudioSource musicA = CreateSource(root.transform, "MusicA");
+            AudioSource musicB = CreateSource(root.transform, "MusicB");
+            AudioSource sfxSource = CreateSource(root.transform, "Sfx");
+
+            MusicPlayer music = root.AddComponent<MusicPlayer>();
+            EditorAssetUtility.SetReference(music, "library", library);
+            EditorAssetUtility.SetReference(music, "sourceA", musicA);
+            EditorAssetUtility.SetReference(music, "sourceB", musicB);
+
+            SfxPlayer sfx = root.AddComponent<SfxPlayer>();
+            EditorAssetUtility.SetReference(sfx, "library", library);
+            EditorAssetUtility.SetReference(sfx, "source", sfxSource);
+
+            AudioCommandModule module = root.AddComponent<AudioCommandModule>();
+            EditorAssetUtility.SetReference(module, "musicPlayer", music);
+            EditorAssetUtility.SetReference(module, "sfxPlayer", sfx);
+            return module;
+        }
+
+        /// <summary>Creates a child object with a silent 2D AudioSource.</summary>
+        private static AudioSource CreateSource(Transform parent, string objectName)
+        {
+            GameObject child = new GameObject(objectName);
+            child.transform.SetParent(parent, false);
+            AudioSource source = child.AddComponent<AudioSource>();
+            source.playOnAwake = false;
+            source.spatialBlend = 0f;
+            return source;
+        }
+
+        /// <summary>Fills the "modules" list of the director.</summary>
+        /// <param name="director">The cutscene director.</param>
+        /// <param name="modules">The command modules to give it.</param>
+        private static void SetModules(CutsceneDirector director, CommandModule[] modules)
+        {
+            SerializedObject serialized = new SerializedObject(director);
+            SerializedProperty list = serialized.FindProperty("modules");
+            list.arraySize = modules.Length;
+            for (int i = 0; i < modules.Length; i++)
+            {
+                list.GetArrayElementAtIndex(i).objectReferenceValue = modules[i];
+            }
+
+            serialized.ApplyModifiedPropertiesWithoutUndo();
         }
     }
 }

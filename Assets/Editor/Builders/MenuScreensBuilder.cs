@@ -109,13 +109,15 @@ namespace Pathless.EditorTools
 
             StatusScreen status = BuildStatusScreen(canvasObject.transform, frame, screenController, textFont, titleFont, roster);
             QuestsScreen quests = BuildQuestsScreen(canvasObject.transform, frame, screenController, textFont, titleFont, catalog, rowPrefab);
+            SettingsScreen settings = BuildSettingsScreen(canvasObject.transform, frame, screenController, textFont, titleFont);
 
             // Tell the router which screens it can open. The menu and input reader are in the scene, so TestSceneBuilder assigns them.
             SerializedObject routerObject = new SerializedObject(router);
             SerializedProperty screens = routerObject.FindProperty("screens");
-            screens.arraySize = 2;
+            screens.arraySize = 3;
             screens.GetArrayElementAtIndex(0).objectReferenceValue = status;
             screens.GetArrayElementAtIndex(1).objectReferenceValue = quests;
+            screens.GetArrayElementAtIndex(2).objectReferenceValue = settings;
             routerObject.ApplyModifiedPropertiesWithoutUndo();
 
             PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
@@ -384,6 +386,44 @@ namespace Pathless.EditorTools
             tabs.arraySize = 2;
             tabs.GetArrayElementAtIndex(0).objectReferenceValue = activeTab;
             tabs.GetArrayElementAtIndex(1).objectReferenceValue = completedTab;
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+            return screen;
+        }
+
+        /// <summary>Builds the Settings screen: four option rows (three volumes and the text speed).</summary>
+        private static SettingsScreen BuildSettingsScreen(Transform canvas, Sprite frame, RuntimeAnimatorController controller,
+            TMP_FontAsset textFont, TMP_FontAsset titleFont)
+        {
+            RectTransform panel = CreateScreenRoot("SettingsScreen", canvas, frame, controller, textFont, titleFont, "SETTINGS",
+                "Up / Down: select     Left / Right: change     Esc / B: back", out Animator animator);
+            SettingsScreen screen = panel.parent.gameObject.AddComponent<SettingsScreen>();
+
+            const int rowCount = 4;
+            SettingsRow[] rows = new SettingsRow[rowCount];
+            for (int i = 0; i < rowCount; i++)
+            {
+                RectTransform rowRect = DialogueUiBuilder.CreateRect("Row" + (i + 1), panel);
+                PlaceTopLeft(rowRect, 60f, 70f + i * 48f, 480f, 32f);
+                SettingsRow row = rowRect.gameObject.AddComponent<SettingsRow>();
+
+                TextMeshProUGUI nameText = CreateRowText("Name", rowRect, textFont, 24f, LightColor, TextAlignmentOptions.Left, 0f, 0f, 230f, 32f);
+                TextMeshProUGUI valueText = CreateRowText("Value", rowRect, textFont, 24f, LightColor, TextAlignmentOptions.Left, 240f, 0f, 240f, 32f);
+                EditorAssetUtility.SetReference(row, "nameLabel", nameText);
+                EditorAssetUtility.SetReference(row, "valueLabel", valueText);
+                rows[i] = row;
+            }
+
+            EditorAssetUtility.SetString(screen, "screenId", "settings");
+            EditorAssetUtility.SetReference(screen, "animator", animator);
+
+            SerializedObject serialized = new SerializedObject(screen);
+            SerializedProperty list = serialized.FindProperty("rows");
+            list.arraySize = rowCount;
+            for (int i = 0; i < rowCount; i++)
+            {
+                list.GetArrayElementAtIndex(i).objectReferenceValue = rows[i];
+            }
+
             serialized.ApplyModifiedPropertiesWithoutUndo();
             return screen;
         }

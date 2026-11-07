@@ -42,6 +42,12 @@ namespace Pathless.EditorTools
         /// <summary>Id of Gabe's conversation (a portrait test between Gabe and the Protagonist).</summary>
         public const string GabeId = "gabe_chat";
 
+        /// <summary>Id of Michael's conversation (a portrait test between Michael and the Protagonist).</summary>
+        public const string MichaelId = "michael_chat";
+
+        /// <summary>Id of Hina's conversation (a portrait test between Hina and the Protagonist).</summary>
+        public const string HinaId = "hina_chat";
+
         /// <summary>Id of the sign conversation (narration lines only).</summary>
         public const string SignId = "sign_welcome";
 

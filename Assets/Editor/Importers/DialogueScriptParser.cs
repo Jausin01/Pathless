@@ -141,7 +141,7 @@ namespace Pathless.EditorTools
         }
 
         /// <summary>The command words the cutscene system understands (anything else is reported as an error).</summary>
-        private static readonly HashSet<string> KnownCommands = new HashSet<string> { "fade", "wait", "move", "face", "camera", "scene" };
+        private static readonly HashSet<string> KnownCommands = new HashSet<string> { "fade", "wait", "move", "face", "camera", "scene", "party", "bond", "formation", "music", "sfx" };
 
         /// <summary>Matches a divider line made of 3 or more "=".</summary>
         private static readonly Regex DividerRegex = new Regex(@"^={3,}$");
@@ -438,7 +438,7 @@ namespace Pathless.EditorTools
 
             if (!KnownCommands.Contains(verb))
             {
-                AddMessage(result, lineNumber, $"Unknown command '@{verb}'. Known: fade, wait, move, face, camera, scene, set, add, quest, if, else, end, goto, choice.", true);
+                AddMessage(result, lineNumber, $"Unknown command '@{verb}'. Known: fade, wait, move, face, camera, scene, party, bond, formation, music, sfx, set, add, quest, if, else, end, goto, choice.", true);
                 return;
             }
 

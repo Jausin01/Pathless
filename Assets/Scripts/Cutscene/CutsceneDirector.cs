@@ -43,6 +43,9 @@ namespace Pathless.Cutscene
         [SerializeField] private SceneLoader sceneLoader;
 
         /// <summary>The dialogue runner; used to reset the camera when the dialogue ends. Assigned by the scene builder.</summary>
+        /// <summary>Extra command groups (party, music...). Asked when the director does not know a command itself.</summary>
+        [SerializeField] private CommandModule[] modules;
+
         [SerializeField] private DialogueRunner runner;
 
         /// <summary>Starts listening for the end of the dialogue.</summary>
@@ -95,7 +98,16 @@ namespace Pathless.Cutscene
                     yield return StartCoroutine(RunScene(words, command));
                     break;
                 default:
-                    Warn(command, "unknown command.");
+                    CommandModule module = FindModule(words[0].ToLowerInvariant());
+                    if (module != null)
+                    {
+                        yield return StartCoroutine(module.Run(words, command));
+                    }
+                    else
+                    {
+                        Warn(command, "unknown command.");
+                    }
+
                     break;
             }
         }
@@ -227,6 +239,27 @@ namespace Pathless.Cutscene
         /// <param name="words">The command split in words.</param>
         /// <param name="index">Where "temp" would be.</param>
         /// <returns>True if the command is temporary.</returns>
+        /// <summary>Finds the module that handles a command word.</summary>
+        /// <param name="verb">The command word in lower case.</param>
+        /// <returns>The module, or null if none handles it.</returns>
+        private CommandModule FindModule(string verb)
+        {
+            if (modules == null)
+            {
+                return null;
+            }
+
+            foreach (CommandModule module in modules)
+            {
+                if (module != null && module.Handles(verb))
+                {
+                    return module;
+                }
+            }
+
+            return null;
+        }
+
         private static bool IsTemp(string[] words, int index)
         {
             return words.Length > index && words[index].ToLowerInvariant() == "temp";

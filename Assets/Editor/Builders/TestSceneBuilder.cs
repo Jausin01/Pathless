@@ -105,12 +105,17 @@ namespace Pathless.EditorTools
             DialogueSequence aliceSequence = DialogueTestDataBuilder.LoadSequence(DialogueTestDataBuilder.AliceId);
             GameObject gabePrefab = AssetDatabase.LoadAssetAtPath<GameObject>(GabePrefabBuilder.PrefabPath);
             DialogueSequence gabeSequence = DialogueTestDataBuilder.LoadSequence(DialogueTestDataBuilder.GabeId);
+            GameObject michaelPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(MichaelPrefabBuilder.PrefabPath);
+            DialogueSequence michaelSequence = DialogueTestDataBuilder.LoadSequence(DialogueTestDataBuilder.MichaelId);
+            GameObject hinaPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(HinaPrefabBuilder.PrefabPath);
+            DialogueSequence hinaSequence = DialogueTestDataBuilder.LoadSequence(DialogueTestDataBuilder.HinaId);
 
             if (playerPrefab == null || blockPrefab == null || tiles.Count == 0
                 || dialoguePrefab == null || optionalSequence == null || forcedSequence == null
                 || signPrefab == null || signSequence == null || menuPrefab == null || cutscenePrefab == null
                 || violetPrefab == null || violetSequence == null || katePrefab == null || kateSequence == null
-                || alicePrefab == null || aliceSequence == null || gabePrefab == null || gabeSequence == null)
+                || alicePrefab == null || aliceSequence == null || gabePrefab == null || gabeSequence == null
+                || michaelPrefab == null || michaelSequence == null || hinaPrefab == null || hinaSequence == null)
             {
                 Debug.LogError("TestSceneBuilder: prefabs, tiles or dialogue assets are missing. Use 'Build Everything' instead.");
                 return;
@@ -127,10 +132,19 @@ namespace Pathless.EditorTools
             SpawnNpc(katePrefab, "Kate", new Vector3(1.5f, 1.5f, 0f), scene, runner, kateSequence);
             SpawnNpc(alicePrefab, "Alice", new Vector3(-4.5f, 1.5f, 0f), scene, runner, aliceSequence);
             SpawnNpc(gabePrefab, "Gabe", new Vector3(4.5f, 2.5f, 0f), scene, runner, gabeSequence);
+            SpawnNpc(michaelPrefab, "Michael", new Vector3(-3f, 3f, 0f), scene, runner, michaelSequence);
+            SpawnNpc(hinaPrefab, "Hina", new Vector3(3f, 3.5f, 0f), scene, runner, hinaSequence);
             ConfigureCamera(player.transform);
             GameObject cutsceneSystem = SpawnCutsceneSystem(cutscenePrefab, scene, player, runner);
+            AudioBuilder.SetSceneTrack(cutsceneSystem, "Town");
             AddActor(GameObject.Find("NpcBlock_Optional"), "Elder");
             AddActor(GameObject.Find("NpcBlock_Forced"), "Messenger");
+
+            // The friends are cutscene actors too, so @move and @face (and the walk animation) work on them.
+            foreach (string friend in new[] { "Violet", "Kate", "Alice", "Gabe", "Michael", "Hina" })
+            {
+                AddActor(GameObject.Find(friend), friend);
+            }
 
             // Icons above the characters: the Elder offers a quest (the icon disappears once it is accepted) and
             // Violet has something to talk about. The forced Messenger needs no icon (the cutscene starts by itself).
@@ -139,6 +153,8 @@ namespace Pathless.EditorTools
             InteractionIconBuilder.AddIcon(GameObject.Find("Kate"), InteractionIconType.Talk, 2.2f, runner);
             InteractionIconBuilder.AddIcon(GameObject.Find("Alice"), InteractionIconType.Talk, 2.2f, runner);
             InteractionIconBuilder.AddIcon(GameObject.Find("Gabe"), InteractionIconType.Talk, 2.2f, runner);
+            InteractionIconBuilder.AddIcon(GameObject.Find("Michael"), InteractionIconType.Talk, 2.2f, runner);
+            InteractionIconBuilder.AddIcon(GameObject.Find("Hina"), InteractionIconType.Talk, 2.2f, runner);
 
             // House door: walking into the zone loads the house interior. The spawn point is where the player
             // reappears when coming back out of the house.

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Pathless.Npc;
 using Pathless.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -38,6 +39,9 @@ namespace Pathless.Cutscene
         /// <summary>The motor of a player-style actor (null for simple objects).</summary>
         private PlayerMotor motor;
 
+        /// <summary>Facing and walk animation of an NPC character (null for the player and for plain blocks).</summary>
+        private NpcFacing npcFacing;
+
         /// <summary>The facing of a player-style actor (null for simple objects).</summary>
         private PlayerFacing facing;
 
@@ -62,6 +66,7 @@ namespace Pathless.Cutscene
         {
             motor = GetComponent<PlayerMotor>();
             facing = GetComponent<PlayerFacing>();
+            npcFacing = GetComponent<NpcFacing>();
         }
 
         /// <summary>Puts the actor where earlier cutscenes left it (only when this actor persists its state).</summary>
@@ -82,6 +87,10 @@ namespace Pathless.Cutscene
             if (facing != null && ActorStateStore.TryGetFacing(sceneName, actorName, out Vector2 savedFacing))
             {
                 facing.SetDirection(savedFacing);
+            }
+            else if (npcFacing != null && ActorStateStore.TryGetFacing(sceneName, actorName, out Vector2 savedNpcFacing))
+            {
+                npcFacing.Face(savedNpcFacing);
             }
         }
 
@@ -121,6 +130,14 @@ namespace Pathless.Cutscene
                 }
                 else
                 {
+                    // An NPC (or a plain block) has no motor: it is moved directly. An NPC also turns towards its
+                    // target and plays the walk animation through its Animator.
+                    if (npcFacing != null)
+                    {
+                        npcFacing.Face(toTarget);
+                        npcFacing.SetWalking(true);
+                    }
+
                     Vector2 next = Vector2.MoveTowards(transform.position, target, walkSpeed * Time.deltaTime);
                     transform.position = new Vector3(next.x, next.y, transform.position.z);
                 }
@@ -132,6 +149,11 @@ namespace Pathless.Cutscene
             if (motor != null)
             {
                 motor.ClearScriptedInput();
+            }
+
+            if (npcFacing != null)
+            {
+                npcFacing.SetWalking(false);
             }
 
             if (permanent && persistState)
@@ -153,6 +175,11 @@ namespace Pathless.Cutscene
             if (facing != null)
             {
                 facing.SetDirection(direction);
+            }
+
+            if (npcFacing != null)
+            {
+                npcFacing.Face(direction);
             }
         }
     }

@@ -64,6 +64,8 @@ Messenger (neutral): The camera just moved to the Elder. Commands go inside the 
 @face Messenger west
 Messenger (sad): I walked here on my own. Safe travels.
 @quest complete deliver_message
+// Audio demo: a door sound, then the music changes by itself in the new scene (each scene has its own track).
+@sfx door
 // Scene change: loads Test_House, puts the player on its "door" spawn point and continues with "house_intro".
 // Delete this line to end the demo here instead.
 @scene Test_House door house_intro
@@ -73,6 +75,15 @@ Messenger (sad): I walked here on my own. Safe travels.
 [violet_chat | optional]
 // Portrait test: every expression of Violet and of the Protagonist appears at least once.
 Violet (neutral): ...Oh. It's you.
+// NPC cutscene demo: Violet walks and turns with her own Animator, then goes back ("temp" = she returns afterwards).
+Violet (happy): Wait, watch this.
+@move Violet -1.5 0 temp
+@face Violet east temp
+@wait 0.4
+@face Violet south temp
+Violet (neutral): See? I can walk during a conversation now.
+@move Violet -1.5 1.5 temp
+@face Violet south temp
 Protagonist (neutral): Hey, Violet. Do you have a minute?
 Violet (happy): Always. You're the only one who asks.
 Protagonist (happy): That's not true. Everybody likes you.
@@ -100,6 +111,10 @@ Protagonist (angry): Put it down. Now.
 Kate (angry): Do not tell me what to do! It is my rock!
 Protagonist (shocked): Fine, fine. Just do not drop it on my foot.
 Kate (neutral): ...Okay. I put it back. Happy now?
+// Party commands demo: the bond between Kate and the Protagonist grows, and Kate joins the active party.
+@bond protagonist kate 1
+@party set protagonist kate violet michael
+> Kate joined the party. Open the menu (Status) to see it. The bond between Kate and the Protagonist grew by 1.
 > End of the portrait test.
 
 =========
@@ -134,4 +149,35 @@ Protagonist (shocked): You almost gave me a heart attack.
 Gabe (angry): I almost gave myself one! Do not do that to me!
 Protagonist (angry): Then stop making me worry about you.
 Gabe (neutral): ...Deal. Come on, let us go back.
+> End of the portrait test.
+
+=========
+
+[michael_chat | optional]
+// Portrait test: every expression of Michael and of the Protagonist appears at least once.
+Michael (neutral): Do not move. Just for a second.
+Protagonist (neutral): Why? What do you see?
+Michael (happy): Nothing bad, for once. You are about to laugh.
+Protagonist (happy): Ha! Okay, that was a good one.
+Michael (sad): ...But I also saw the part after the laugh. I wish I had not.
+Protagonist (scared): Michael, what happens after?
+Michael (scared): I cannot say. Every time I look, it gets closer.
+Protagonist (shocked): You are shaking. Sit down.
+Michael (angry): Do not tell me to calm down! You do not see what I see!
+Protagonist (angry): Then tell me! I cannot help if you keep it to yourself!
+Michael (neutral): ...Not yet. Soon. I promise.
+> End of the portrait test.
+
+[hina_chat | optional]
+// Portrait test: every expression of Hina and of the Protagonist appears at least once.
+Hina (neutral): You are staring. Is something on my face?
+Protagonist (neutral): Sorry. Just thinking about earlier.
+Hina (happy): Earlier? Oh, the door thing! That was fun, right?
+Protagonist (scared): Hina, a door appeared in the middle of the room.
+Hina (angry): It was not my fault! It does not listen to me!
+Protagonist (happy): Okay, okay. It was a little bit cool.
+Hina (sad): ...Cool until it hurts someone. I hate that I cannot control it.
+Protagonist (shocked): Hey. Nobody got hurt. We are fine.
+Hina (scared): Not yet. But what if next time...
+Hina (neutral): Never mind. Forget I said anything.
 > End of the portrait test.

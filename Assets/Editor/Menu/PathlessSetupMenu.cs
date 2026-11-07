@@ -60,6 +60,20 @@ namespace Pathless.EditorTools
                 return;
             }
 
+            // Michael's animations.
+            if (MichaelAnimationBuilder.Build() == null)
+            {
+                Debug.LogError("PathlessSetupMenu: stopped, Michael's animations could not be built.");
+                return;
+            }
+
+            // Hina's animations.
+            if (HinaAnimationBuilder.Build() == null)
+            {
+                Debug.LogError("PathlessSetupMenu: stopped, Hina's animations could not be built.");
+                return;
+            }
+
             // Step 3: Tile assets.
             Dictionary<string, Tile> tiles = TestTilesBuilder.Build();
             if (tiles.Count == 0)
@@ -87,6 +101,13 @@ namespace Pathless.EditorTools
             if (!MenuScreenAnimationBuilder.Build() || !MenuScreensBuilder.Build())
             {
                 Debug.LogError("PathlessSetupMenu: stopped, the menu screens could not be built.");
+                return;
+            }
+
+            // Step 3c-1b: the audio library (music and sound names for @music / @sfx). It must exist before the cutscene system.
+            if (!AudioBuilder.Build())
+            {
+                Debug.LogError("PathlessSetupMenu: stopped, the audio library could not be built.");
                 return;
             }
 
@@ -119,7 +140,9 @@ namespace Pathless.EditorTools
             GameObject katePrefab = KatePrefabBuilder.Build();
             GameObject alicePrefab = AlicePrefabBuilder.Build();
             GameObject gabePrefab = GabePrefabBuilder.Build();
-            if (playerPrefab == null || blockPrefab == null || signPrefab == null || violetPrefab == null || katePrefab == null || alicePrefab == null || gabePrefab == null)
+            GameObject michaelPrefab = MichaelPrefabBuilder.Build();
+            GameObject hinaPrefab = HinaPrefabBuilder.Build();
+            if (playerPrefab == null || blockPrefab == null || signPrefab == null || violetPrefab == null || katePrefab == null || alicePrefab == null || gabePrefab == null || michaelPrefab == null || hinaPrefab == null)
             {
                 Debug.LogError("PathlessSetupMenu: stopped, prefabs could not be built.");
                 return;

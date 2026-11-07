@@ -71,6 +71,7 @@ namespace Pathless.EditorTools
             TestSceneBuilder.SpawnMenuSystem(menuPrefab, scene, player, runner);
             TestSceneBuilder.ConfigureCamera(player.transform);
             GameObject cutsceneSystem = TestSceneBuilder.SpawnCutsceneSystem(cutscenePrefab, scene, player, runner);
+            AudioBuilder.SetSceneTrack(cutsceneSystem, "House");
 
             // Entrance point, exit door and the arrival handler.
             SceneFlowBuilder.AddSpawnPoint(DoorSpawnId, new Vector2(0f, -3.2f), Vector2.up);
